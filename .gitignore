@@ -2,6 +2,11 @@
 __pycache__/
 *.pyc
 
+# Virtual Environments & Secrets
+.venv/
+venv/
+.env
+
 # OS-specific
 .DS_Store
 
