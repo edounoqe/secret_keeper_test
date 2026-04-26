@@ -94,7 +94,7 @@ def main():
     # 로그인 후 화면 (로그아웃 처리)
     st.sidebar.success("로그인 상태입니다.")
     if st.sidebar.button("로그아웃"):
-        st.session_state.clear()
+        st.session_state["logged_in"] = False
         st.rerun()
 
     # 데이터 로드 및 캐싱 안내 멘트
@@ -194,7 +194,12 @@ def main():
         
         # 다시 하기 버튼
         if st.button("다시 테스트하기"):
-            st.session_state.clear()
+            st.session_state["quiz_submitted"] = False
+            st.session_state["total_score"] = 0
+            # 폼 내부의 라디오 버튼 session_state 초기화
+            for key in list(st.session_state.keys()):
+                if key.startswith("q_"):
+                    del st.session_state[key]
             st.rerun()
 
 if __name__ == "__main__":
