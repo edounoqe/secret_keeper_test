@@ -85,16 +85,16 @@ def main():
                 # 미리 정의된 로그인 정보와 비교
                 if username == "student" and password == "1234":
                     st.session_state["logged_in"] = True
-                    st.success("로그인 성공!")
+                    st.toast("로그인 성공!", icon="✅")
                     st.rerun()
                 else:
-                    st.error("오류: 아이디 또는 비밀번호가 일치하지 않습니다.")
+                    st.toast("오류: 아이디 또는 비밀번호가 일치하지 않습니다.", icon="🚨")
         return  # 로그인 전에는 퀴즈가 보이지 않게 처리
 
     # 로그인 후 화면 (로그아웃 처리)
     st.sidebar.success("로그인 상태입니다.")
     if st.sidebar.button("로그아웃"):
-        st.session_state["logged_in"] = False
+        st.session_state.clear()
         st.rerun()
 
     # 데이터 로드 및 캐싱 안내 멘트
@@ -153,7 +153,7 @@ def main():
                 # 모든 항목을 선택했는지 검증
                 unanswered = [str(q) for q, data in user_answers.items() if data["selected"] is None]
                 if unanswered:
-                    st.warning(f"아직 답변하지 않은 문항이 있습니다. (문항: {', '.join(unanswered)})")
+                    st.toast(f"아직 답변하지 않은 문항이 있습니다. (문항: {', '.join(unanswered)})", icon="⚠️")
                 else:
                     # 총점 계산
                     total_score = 0
@@ -203,4 +203,8 @@ def main():
             st.rerun()
 
 if __name__ == "__main__":
+    print("=" * 40)
+    print(f"[LOG] EC2 앱 실행 시작 - 제출자: {STUDENT_ID} {STUDENT_NAME}")
+    print("[LOG] 스트림릿 애플리케이션 정상 초기화 완료")
+    print("=" * 40)
     main()
